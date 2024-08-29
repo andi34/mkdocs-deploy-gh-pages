@@ -28,6 +28,10 @@ Note that for this approach, Github Pages will be enabled in Settings but you wi
 
 In case this action should be used in a Github Enterprise environment you can overwrite the `github.com` domain with your corresponding Github Enterprise domain name by specifying the `GITHUB_DOMAIN` environment variable.
 
+### Custom repository
+
+In case you want to push to another repository than origin define `GITHUB_ORIGIN`. Needs building with `PERSONAL_TOKEN`.
+
 ### Custom domain for github pages
 
 MkDocs can be deployed to github pages using a custom domain, if you populate a `CUSTOM_DOMAIN` environment variable. This will generate a CNAME file, which will be placed inside the `/docs` folder.
@@ -62,15 +66,19 @@ jobs:
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN }} # Uses Personal Access Token (PAT) for checkout, needed to push to another repository
 
       - name: Deploy docs
         uses: mhausenblas/mkdocs-deploy-gh-pages@nomaterial
         # Or use mhausenblas/mkdocs-deploy-gh-pages@master to build with the mkdocs-material theme
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # PERSONAL_TOKEN: ${{ secrets.PAT_TOKEN }}
           CUSTOM_DOMAIN: optionaldomain.com
           CONFIG_FILE: folder/mkdocs.yml
           EXTRA_PACKAGES: build-base
           # GITHUB_DOMAIN: github.myenterprise.com
+          # GITHUB_ORIGIN: destination-repository-username/destination-repository-name
           REQUIREMENTS: folder/requirements.txt
 ```

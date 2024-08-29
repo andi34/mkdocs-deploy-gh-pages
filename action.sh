@@ -35,12 +35,19 @@ else
     export CONFIG_FILE="${GITHUB_WORKSPACE}/mkdocs.yml"
 fi
 
+if [ -n "${GITHUB_ORIGIN}" ]; then
+    print_info "setup with GITHUB_ORIGIN"
+else
+    print_info "setup with GITHUB_REPOSITORY"
+    export GITHUB_ORIGIN=${GITHUB_REPOSITORY}
+fi
+
 if [ -n "${GITHUB_TOKEN}" ]; then
     print_info "setup with GITHUB_TOKEN"
-    remote_repo="https://x-access-token:${GITHUB_TOKEN}@${GITHUB_DOMAIN:-"github.com"}/${GITHUB_REPOSITORY}.git"
+    remote_repo="https://x-access-token:${GITHUB_TOKEN}@${GITHUB_DOMAIN:-"github.com"}/${GITHUB_ORIGIN}.git"
 elif [ -n "${PERSONAL_TOKEN}" ]; then
     print_info "setup with PERSONAL_TOKEN"
-    remote_repo="https://x-access-token:${PERSONAL_TOKEN}@${GITHUB_DOMAIN:-"github.com"}/${GITHUB_REPOSITORY}.git"
+    remote_repo="https://x-access-token:${PERSONAL_TOKEN}@${GITHUB_DOMAIN:-"github.com"}/${GITHUB_ORIGIN}.git"
 else
     print_info "no token found; linting"
     exec -- mkdocs build --config-file "${CONFIG_FILE}"
