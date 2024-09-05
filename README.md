@@ -1,6 +1,6 @@
 # GitHub Action to deploy an MkDocs site to GitHub Pages
 
-![GitHub Badge](https://github.com/mhausenblas/mkdocs-deploy-gh-pages/workflows/Build/badge.svg)
+![GitHub Badge](https://github.com/andi34/mkdocs-deploy-gh-pages/workflows/Build/badge.svg)
 
 This GitHub action will deploy your [MkDocs site](https://www.mkdocs.org/) as [GitHub Pages](https://pages.github.com/), using the [Material](https://github.com/squidfunk/mkdocs-material) theme. It assumes that an `mkdocs.yml` file is present in the top-level directory and the source files (Markdown, etc.) are in the `docs/` folder. You can use [mhausenblas/mkdocs-template](https://github.com/mhausenblas/mkdocs-template) as a template.
 
@@ -70,8 +70,8 @@ jobs:
           token: ${{ secrets.PAT_TOKEN }} # Uses Personal Access Token (PAT) for checkout, needed to push to another repository
 
       - name: Deploy docs
-        uses: mhausenblas/mkdocs-deploy-gh-pages@nomaterial
-        # Or use mhausenblas/mkdocs-deploy-gh-pages@master to build with the mkdocs-material theme
+        uses: andi34/mkdocs-deploy-gh-pages@nomaterial
+        # Or use andi34/mkdocs-deploy-gh-pages@master to build with the mkdocs-material theme
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # PERSONAL_TOKEN: ${{ secrets.PAT_TOKEN }}
